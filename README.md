@@ -1,5 +1,142 @@
 # 智能药箱 (Medibox)
 
+[English](#english) | [中文](#chinese)
+
+---
+
+<a name="english"></a>
+
+# Medibox
+
+> **Mission**: Providing a thoughtful and reliable medication management solution for elderly individuals with Alzheimer's disease.
+
+![Project Status](https://img.shields.io/badge/Status-Phase_6_Integration-blue) ![License](https://img.shields.io/badge/License-MIT-green)
+
+## 📋 Project Introduction
+
+Medibox is a modular smart pillbox system designed specifically for Alzheimer's patients and their caregivers. By combining physical pillboxes with a digital system, it addresses pain points such as "forgetting to take medicine," "taking the wrong medicine," and "duplicate dosing."
+
+### Core Features
+- **Modular Design**: Supports 1 Hub connecting multiple Slave pillboxes for flexible expansion.
+- **Voice Reminders (TTS)**: Clear voice announcements for medication time and dosage.
+- **Intelligent Lid Detection**: Hall effect sensors monitor the open/closed status of the pillboxes in real-time.
+- **Spatial Mapping (Blink to Identify)**: Quickly identify the relationship between physical pillboxes and APP settings via LED blinking.
+- **2D Grid Layout**: Supports free assembly of pillboxes into multi-row and multi-column arrays, breaking through linear connection limits.
+- **Status Sync**: Real-time display of pillbox status (connection, battery, medication records) on the Web interface.
+
+---
+
+## 🎯 Quick Navigation
+
+| Resource | Description | Path |
+|------|------|------|
+| **Architecture Design** | Overall system architecture and design philosophy | [Phase 2 Architecture](Modular_Pillbox_Architecture_v2.md) |
+| **2D Grid Architecture** | 2D grid architecture update log | [Grid Update](2D_Grid_Architecture_Update.md) |
+| **Hardware Specification** | PCB design and 3D shell models | [Plans](plans/) / [SCAD Models](.) |
+| **Firmware Code** | ESP32 main control and ATtiny85 slave code | [Firmware](firmware/) |
+| **Frontend UI** | Web management interface source code | [UI Source](ui/) |
+| **API Documentation** | WebSocket and HTTP interface definitions | [API Reference](docs/api/API_Reference.md) |
+| **Test Plan** | System testing and acceptance criteria | [Test Plan](docs/testing/Test_Plan.md) |
+| **User Guide** | User guide for seniors and family members | [User Guide](docs/user/User_Guide.md) |
+
+---
+
+## 📁 Project Structure
+
+```text
+medibox/
+├── docs/               # Documentation Center
+│   ├── api/            # API Interface Definitions
+│   ├── testing/        # Test Plans and Cases
+│   └── user/           # User Guide
+├── firmware/           # Embedded Firmware
+│   ├── esp32_hub/      # Main Control Module (WiFi, Web Server, I2C Master)
+│   └── attiny85_slave/ # Slave Module (I2C Slave, Sensor, LED)
+├── ui/                 # Web Frontend (React + Vite)
+├── plans/              # Hardware Design Specifications (PCB, BOM)
+├── *.scad              # 3D Printed Shell Models (OpenSCAD)
+└── README.md           # Project Homepage
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Hardware Preparation
+Refer to the [BOM List](plans/Phase2_Complete_BOM.md) to purchase core components:
+- ESP32 Development Board
+- ATtiny85 Microcontroller
+- Hall Effect Sensor
+- Pogo Pin Connectors
+- 3D Printed Shells
+
+### 2. Environment Setup
+- **Firmware Development**: Install [Arduino IDE](https://www.arduino.cc/en/software) and add support for ESP32 and ATtiny85 boards.
+- **Frontend Development**: Install [Node.js](https://nodejs.org/) (v16+).
+
+### 3. Firmware Flashing
+1. **Slave (ATtiny85)**:
+   - Use an ISP programmer to flash `firmware/attiny85_slave` to the chip.
+   - Ensure correct I2C addresses are set (default 0x08-0x0B).
+2. **Hub (ESP32)**:
+   - Open `firmware/esp32_hub`.
+   - Modify WiFi configuration in `config.h` (or use provisioning mode).
+   - Upload code to ESP32.
+   - Run `Tools > ESP32 Sketch Data Upload` to upload frontend files (must build frontend first).
+
+### 4. Frontend Deployment
+```bash
+cd ui
+npm install       # Install dependencies
+npm run build     # Build production code
+# Build artifacts are in ui/dist/, upload to ESP32 via SPIFFS
+```
+
+---
+
+## 📊 Project Status
+
+- [x] **Phase 1**: Proof of Concept and Prototyping
+- [x] **Phase 2**: Modular Architecture Upgrade (I2C Bus)
+- [x] **Phase 3**: Hardware Design Specifications (PCB & Shell)
+- [x] **Phase 4**: Firmware Development (ESP32 & ATtiny85)
+- [x] **Phase 5**: Web Frontend Development (Completed, including 2D grid update)
+- [ ] **Phase 6**: Hardware Integration and System Testing (In progress)
+
+**Current Stage**: Waiting for hardware sampling and procurement, preparing for integration tests.
+
+---
+
+## 📅 Recent Updates
+
+- **2026-03-06**: Upgraded system architecture to support 2D grid layout, optimized Web UI display logic, and supported multi-row and multi-column pillbox arrays.
+
+---
+
+## 🤝 Contribution Guide
+
+Welcome to Medibox development!
+
+1. **Report Bugs**: Please describe reproduction steps in detail on the Issues page.
+2. **Submit Code**:
+   - Fork the repository.
+   - Create a feature branch (`git checkout -b feature/AmazingFeature`).
+   - Commit changes (`git commit -m 'Add some AmazingFeature'`).
+   - Push to the branch (`git push origin feature/AmazingFeature`).
+   - Submit a Pull Request.
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<a name="chinese"></a>
+
+# 智能药箱 (Medibox)
+
 > **使命**：为阿尔兹海默症老人提供贴心、可靠的用药管理解决方案。
 
 ![Project Status](https://img.shields.io/badge/Status-Phase_6_Integration-blue) ![License](https://img.shields.io/badge/License-MIT-green)
